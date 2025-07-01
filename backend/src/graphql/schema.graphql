@@ -1,0 +1,32 @@
+type Event {
+	attendees: [User!]!
+	id: ID
+	location: String
+}
+
+input EventCreateInput {
+	description: String
+	endTime: String
+	location: String!
+	name: String!
+	startTime: String!
+}
+
+type Mutation {
+	addAttendeeToEvent(eventId: ID!, userId: ID!): Event
+	createEvent(data: EventCreateInput!): Event
+}
+
+type Query {
+	getEvents: [Event!]
+	getUser: User
+}
+
+"""
+A user in the system
+"""
+type User {
+	email: String
+	id: ID
+	name: String
+}

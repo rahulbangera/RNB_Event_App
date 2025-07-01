@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Socket Test</title>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>Socket.IO Test</h1>
+  <script>
+    const socket = io("http://localhost:4000");
+
+    socket.on("connect", () => {
+      console.log("✅ Connected with ID:", socket.id);
+      socket.emit("test-backend", { message: "Hello backend!" });
+    });
+
+    socket.on("hello", (data) => {
+      console.log("👋 Received from backend:", data);
+    });
+
+    socket.on("pong", (data) => {
+      console.log("🎯 Pong from backend:", data);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("❌ Disconnected");
+    });
+  </script>
+</body>
+</html>
