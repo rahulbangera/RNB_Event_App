@@ -6,8 +6,8 @@
 		"dev": "tsx src/index.ts",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"gen": "prisma generate && pothos generate",
-		"build": "yarn install && tsc",
-		"start": "node dist/index.js"
+		"build": "prisma generate && tsc",
+		"start": "tsx dist/src/index.js"
 	},
 	"type": "module",
 	"keywords": [],
@@ -19,6 +19,7 @@
 		"@pothos/core": "^4.7.0",
 		"@pothos/plugin-errors": "^4.4.1",
 		"@prisma/client": "^6.10.1",
+		"@t3-oss/env-core": "^0.13.8",
 		"bcryptjs": "^3.0.2",
 		"body-parser": "^2.2.0",
 		"dotenv": "^17.0.0",
