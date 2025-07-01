@@ -4,6 +4,8 @@ A modern, full-stack mobile application for discovering and joining events — w
 
 Purpose of building this app was to test out my own skills and this is built in 3 days to put my consistency in test
 
+[![Watch the demo](https://youtu.be/Wx3AaRJsMeg)]
+
 ---
 
 ## 🚀 Features
