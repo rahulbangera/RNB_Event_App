@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GraphQLClient } from "graphql-request";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { API_URL } from "@/constants/api";
 
 export interface User {
 	id: string;
@@ -47,7 +48,7 @@ export const useAuthStore = create<AuthState>()(
 					return;
 				}
 				set({ token: token });
-				const client = new GraphQLClient("http://localhost:4000/graphql", {
+				const client = new GraphQLClient(`${API_URL}/graphql`, {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},

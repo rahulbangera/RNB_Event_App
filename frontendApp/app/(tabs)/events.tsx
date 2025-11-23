@@ -5,17 +5,21 @@ import { Label } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import { Alert, Text, TextInput, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useCreateEvent } from "@/hooks/eventHook";
 import COLORS from "@/constants/colors";
 
 export default function events() {
 	const createEvent = useCreateEvent();
 	const { user } = useAuthStore();
-
+	DateTimePickerAndroid.open({value: new Date(), mode: "date", is24Hour: true});
+	DateTimePickerAndroid.dismiss({		 	 });
 	const [eventName, setEventName] = useState("");
 	const [eventStartDate, setEventStartDate] = useState(
 		new Date().toISOString(),
 	);
+	
 	const [isValid, setIsValid] = useState(true);
 	const [eventEndDate, setEventEndDate] = useState(new Date().toISOString());
 	const [description, setDescription] = useState("");
@@ -178,9 +182,10 @@ export default function events() {
 								>
 									Start Time
 								</Label>
-								<DateTimePicker
+								<RNDateTimePicker
 									value={eventStartDate ? new Date(eventStartDate) : new Date()}
-									mode="datetime"
+									mode="date"
+									design ="material"
 									textColor="#2D3748"
 									accentColor="black"
 									display="compact"

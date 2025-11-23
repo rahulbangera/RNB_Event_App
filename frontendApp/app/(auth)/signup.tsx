@@ -1,9 +1,10 @@
 import { useRouter } from "expo-router";
-import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Platform, Text, TextInput, TouchableOpacity, View } from "react-native";
 import TouchableButton from "@/components/TouchableButton";
 import { useSignUp } from "@/hooks/authHook";
 import React, { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { KeyboardAvoidingView } from "react-native";
 
 export default function Home() {
 	const router = useRouter();
@@ -57,6 +58,10 @@ export default function Home() {
 	};
 
 	return (
+		<KeyboardAvoidingView
+					style={{ flex: 1 }}
+					behavior={Platform.OS === "ios" ? "padding" : "height"}
+				>
 		<View className="flex-1 items-center justify-between bg-primaryBlueShade">
 			<View className="p-4 rounded-lg shadow-lg">
 				<Text
@@ -167,12 +172,13 @@ export default function Home() {
 				</View>
 			</View>
 			<View>
-				<Text className="text-lg text-gray-400 px-4 text-center pb-8">
+				<Text className="text-lg text-gray-400 px-4 text-center pb-2">
 					By signing up, you agree to our{" "}
 					<Text className="text-primaryYellowShade">Terms of Service</Text> and{" "}
 					<Text className="text-primaryYellowShade">Privacy Policy</Text>.
 				</Text>
 			</View>
 		</View>
+		</KeyboardAvoidingView>
 	);
 }

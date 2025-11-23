@@ -1,11 +1,12 @@
 import type { Socket } from "socket.io-client";
 import io from "socket.io-client";
+import { API_URL } from "@/constants/api";
 
 let socket: typeof Socket | null = null;
 
 export const initSocket = () => {
 	if (!socket) {
-		socket = io("http://localhost:4000", {
+		socket = io(API_URL, {
 			transports: ["websocket"],
 		});
 

@@ -1,15 +1,23 @@
 import { Link, useRouter } from "expo-router";
-import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+	Alert,
+	Platform,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import TouchableButton from "@/components/TouchableButton";
 import { useSignIn } from "@/hooks/authHook";
 import { useState } from "react";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { KeyboardAvoidingView } from "react-native";
 
 export default function Home() {
 	const router = useRouter();
 	const signIn = useSignIn();
 
-	const {setUser, setToken} = useAuthStore();
+	const { setUser, setToken } = useAuthStore();
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -31,7 +39,7 @@ export default function Home() {
 				throw new Error(response.message || "Login failed");
 			}
 			if (response) {
-				const {email, name, role, token, id, imageUrl} = response.data;
+				const { email, name, role, token, id, imageUrl } = response.data;
 				setToken(token);
 				setUser({ email, name, role, id, imageUrl });
 				Alert.alert("Login Successful", "You can now access your account.");
@@ -48,70 +56,77 @@ export default function Home() {
 	};
 
 	return (
-		<View className="flex-1 items-center justify-between bg-primaryBlueShade">
-			<View className="p-4 rounded-lg shadow-lg">
-				<Text
-					className="text-3xl font-bold text-whiteShade"
-					style={{ textAlign: "center" }}
-				>
-					RNB <Text className="text-primaryYellowShade">Events</Text>
-				</Text>
-			</View>
-			<View className="p-4 w-full flex items-center">
-				<Text className="text-5xl font-bold text-whiteShade">Welcome Back</Text>
-				<Text className="mt-2 text-lg text-gray-400 text-center">
-					Log in to continue using RNB Events.
-				</Text>
-				<View className=" gap-6 w-full flex items-center mt-6">
-					<TextInput
-						placeholder="Email"
-						autoCorrect={false}
-						autoCapitalize="none"
-						keyboardType="email-address"
-						value={email}
-						onChangeText={(value) => setEmail(value)}
-						className="bg-optionalShade h-16 rounded-lg w-[90%] px-6 color-whiteShade"
-						placeholderTextColor={"grey"}
-					/>
-					<TextInput
-						placeholder="Password"
-						secureTextEntry={true}
-						autoCorrect={false}
-						autoCapitalize="none"
-						keyboardType="default"
-						value={password}
-						onChangeText={(value) => setPassword(value)}
-						className="bg-optionalShade h-16 rounded-lg w-[90%] px-6 color-whiteShade"
-						placeholderTextColor={"grey"}
-					/>
-					<TouchableButton
-						className="bg-primaryYellowShade w-[90%] p-5 rounded-xl"
-						textStyle={{ textAlign: "center", fontSize: 18, fontWeight: 600 }}
-						title="Sign In"
-						activeOpacity={0.6}
-						onPress={() => handleLogin(email, password)}
-					/>
+		<KeyboardAvoidingView
+			style={{ flex: 1 }}
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+		>
+			<View className="flex-1 items-center justify-between bg-primaryBlueShade">
+				<View className="p-4 rounded-lg shadow-lg">
+					<Text
+						className="text-3xl font-bold text-whiteShade"
+						style={{ textAlign: "center" }}
+					>
+						RNB <Text className="text-primaryYellowShade">Events</Text>
+					</Text>
+				</View>
+				<View className="p-4 w-full flex items-center">
+					<Text className="text-5xl font-bold text-whiteShade">
+						Welcome Back
+					</Text>
+					<Text className="mt-2 text-lg text-gray-400 text-center">
+						Log in to continue using RNB Events.
+					</Text>
+					<View className=" gap-6 w-full flex items-center mt-6">
+						<TextInput
+							placeholder="Email"
+							autoCorrect={false}
+							autoCapitalize="none"
+							keyboardType="email-address"
+							value={email}
+							onChangeText={(value) => setEmail(value)}
+							className="bg-optionalShade h-16 rounded-lg w-[90%] px-6 color-whiteShade"
+							placeholderTextColor={"grey"}
+						/>
+						<TextInput
+							placeholder="Password"
+							secureTextEntry={true}
+							autoCorrect={false}
+							autoCapitalize="none"
+							keyboardType="default"
+							value={password}
+							onChangeText={(value) => setPassword(value)}
+							className="bg-optionalShade h-16 rounded-lg w-[90%] px-6 color-whiteShade"
+							placeholderTextColor={"grey"}
+						/>
+						<TouchableButton
+							className="bg-primaryYellowShade w-[90%] p-5 rounded-xl"
+							textStyle={{ textAlign: "center", fontSize: 18, fontWeight: 600 }}
+							title="Sign In"
+							activeOpacity={0.6}
+							onPress={() => handleLogin(email, password)}
+						/>
 
-					<View className="flex-row items-center justify-center w-[90%]">
-						<Text className="text-lg text-gray-400">
-							Don't have an account?{" "}
-						</Text>
-						<Link href={"/(auth)/signup"} asChild>
-							<TouchableOpacity activeOpacity={0.7}>
-								<Text className="text-primaryYellowShade text-lg font-semibold">
-									Sign Up
-								</Text>
-							</TouchableOpacity>
-						</Link>
+						<View className="flex-row items-center justify-center w-[90%]">
+							<Text className="text-lg text-gray-400">
+								Don't have an account?{" "}
+							</Text>
+							<Link href={"/(auth)/signup"} asChild>
+								<TouchableOpacity activeOpacity={0.7}>
+									<Text className="text-primaryYellowShade text-lg font-semibold">
+										Sign Up
+									</Text>
+								</TouchableOpacity>
+							</Link>
+						</View>
 					</View>
 				</View>
+				<View>
+					<Text className="text-lg text-gray-400 px-4 text-center pb-2">
+						Having trouble logging in?{" "}
+						<Text className="text-primaryYellowShade">Contact Support</Text>
+					</Text>
+				</View>
 			</View>
-			<View>
-				<Text className="text-lg text-gray-400 px-4 text-center pb-8">
-					Having trouble logging in?{" "}
-					<Text className="text-primaryYellowShade">Contact Support</Text>
-				</Text>
-			</View>
-		</View>
+		</KeyboardAvoidingView>
 	);
 }
